@@ -1,19 +1,18 @@
 # hermes-media-suite
 
-一台一百来块一年的云服务器 + Hermes，跑起两个真能干活的 agent：
+一台109一年的云服务器 + Hermes，跑起两个真能干活的 agent：
 
 1. **音视频转录整理**：丢一个链接/文件给它，还你一份提纯过的中文文稿（不是三句话摘要）。
    整理标准的思路来自生财有术亦仁分享的「小D」agent，在此致谢；本仓库是社区重写与升级版。
 2. **四平台社媒调研**：小红书、抖音、微信公众号、微信视频号——丢链接直取内容，
-   关键词跨平台搜索，挖评论区，拆对标账号。通过 TikHub 官方 API 直连，
-   你自己的 key、你自己的账单，本仓库不做任何中间商。
+   关键词跨平台搜索，挖评论区，拆对标账号。
 
 两个 agent 拼起来是一条"收藏处理流水线"：平时随手扔进群里的链接
 （公众号文章、抖音视频、小红书笔记、视频号），agent 拉回内容、转录整理、归档——
 把"收藏了从没看过"变成"收藏了就有输出"。
 
 它们跑在服务器上，不绑你的电脑。电脑关机，agent 照样干活；
-在 Telegram 里发条消息就能使唤（微信接入见文末）。
+在 微信或者飞书 里发条消息就能使唤（微信接入见文末）。
 
 ## 仓库结构
 
@@ -27,10 +26,8 @@ docs/deploy-cheap-server.md   从买服务器到跑通的完整教程
 
 ## 快速开始
 
-**最省事**：打开 [INSTALL_PROMPT.md](INSTALL_PROMPT.md)，把提示词填好丢给你的
-Codex / Claude Code，它替你装完整套。
-
-**想自己动手**：看 [docs/deploy-cheap-server.md](docs/deploy-cheap-server.md)，从零到跑通。
+打开 [INSTALL_PROMPT.md](INSTALL_PROMPT.md)，把前置资料备齐、提示词填好，
+丢给你的 Codex / Claude Code，它替你装完整套。
 
 ## 把账算明白
 
@@ -38,7 +35,7 @@ Codex / Claude Code，它替你装完整套。
 | --- | --- |
 | 服务器 | 一百元上下一年（入门轻量云主机） |
 | 大模型 | 自己的 key，用多少花多少（deepseek 性价比高；有 ChatGPT 会员也可接入共享额度） |
-| TikHub | 按调用计费，只在用小红书调研时产生；响应带 24h 免费 cache_url。注册入口：[user.tikhub.io/register?ref=EJ7Ka9h8](https://user.tikhub.io/register?ref=EJ7Ka9h8)（带我的推荐码，不加价，介意可去掉 ref 参数） |
+| TikHub | 按调用计费，只在用社媒调研时产生；响应带 24h 免费 cache_url。注册入口：[user.tikhub.io/register?ref=EJ7Ka9h8](https://user.tikhub.io/register?ref=EJ7Ka9h8)（带我的推荐码，不加价，介意可去掉 ref 参数） |
 
 软件本身全部免费开源。
 
@@ -46,7 +43,7 @@ Codex / Claude Code，它替你装完整套。
 
 - [Hermes](https://github.com/NousResearch/hermes-agent) —— 底座 agent 框架（本仓库与 Nous Research 无关联，仅为使用者）
 - 生财有术 · 亦仁的「小D」转录整理 agent —— 分享式提纯的整理标准由它启发
-- [TikHub](https://tikhub.io) —— 小红书公开数据 API
+- [TikHub](https://tikhub.io) —— 四平台社媒公开数据 API（小红书/抖音/公众号/视频号）
 
 ## 懒得自己折腾？
 
