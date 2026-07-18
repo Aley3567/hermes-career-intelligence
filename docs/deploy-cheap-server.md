@@ -76,9 +76,11 @@ mcp_servers:
 ```bash
 npm install -g @larksuite/cli
 lark-cli config init        # 填 App ID，App Secret 用 stdin 传入
-lark-cli auth login         # Device Flow 授权
 lark-cli doctor             # 验证配置健康
 ```
+
+应用凭证（bot 身份）对发消息、建文档这些场景已经足够；
+只有明确需要用户身份的场景，才用 `lark-cli auth login` 做用户级授权。
 
 然后给两个 profile 的常驻指令补一条：整理稿优先用 lark-cli 创建飞书文档并返回链接，
 发消息到指定飞书群也用 lark-cli。测试：

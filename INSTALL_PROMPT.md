@@ -41,7 +41,8 @@
 6. 安装并绑定 lark-cli（agent 操作飞书的通道）：
    - `npm install -g @larksuite/cli`
    - 用我的飞书自建应用凭证初始化：`lark-cli config init`（App Secret 通过 stdin 方式传入，不要留在 shell 历史里）
-   - `lark-cli auth login` 完成授权，`lark-cli doctor` 验证配置健康
+   - `lark-cli doctor` 验证配置健康。应用凭证授权对绝大部分场景已经足够，
+     不要默认执行 `lark-cli auth login`——只有某个场景明确需要用户身份时才做用户级授权。
 7. 给两个 profile 的常驻指令追加一条：交付整理稿时优先用 lark-cli 创建飞书文档并返回链接；
    需要发消息到我的飞书群时也用 lark-cli。然后实际测试一次：让 agent 用 lark-cli
    创建一篇标题为「部署联调测试」的飞书文档，把链接发给我确认。
