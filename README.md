@@ -4,8 +4,13 @@
 
 1. **音视频转录整理**：丢一个链接/文件给它，还你一份提纯过的中文文稿（不是三句话摘要）。
    整理标准的思路来自生财有术亦仁分享的「小D」agent，在此致谢；本仓库是社区重写与升级版。
-2. **小红书调研**：关键词搜笔记、拉详情、挖评论区、拆对标博主——通过 TikHub 官方 API 直连，
+2. **四平台社媒调研**：小红书、抖音、微信公众号、微信视频号——丢链接直取内容，
+   关键词跨平台搜索，挖评论区，拆对标账号。通过 TikHub 官方 API 直连，
    你自己的 key、你自己的账单，本仓库不做任何中间商。
+
+两个 agent 拼起来是一条"收藏处理流水线"：平时随手扔进群里的链接
+（公众号文章、抖音视频、小红书笔记、视频号），agent 拉回内容、转录整理、归档——
+把"收藏了从没看过"变成"收藏了就有输出"。
 
 它们跑在服务器上，不绑你的电脑。电脑关机，agent 照样干活；
 在 Telegram 里发条消息就能使唤（微信接入见文末）。
@@ -13,16 +18,19 @@
 ## 仓库结构
 
 ```
-mcp/tikhub_xhs_mcp.py        TikHub 小红书采集 MCP（零依赖，7 个工具）
+INSTALL_PROMPT.md             一键安装提示词：复制丢给 Codex/Claude Code，替你装完整套
+mcp/tikhub_xhs_mcp.py         TikHub 四平台采集 MCP（零依赖，14 个工具，全部真实调用验证过）
 profiles/media-transcriber.md 转录整理 agent 的指令
-profiles/xhs-research.md      小红书调研 agent 的指令
+profiles/social-research.md   四平台社媒调研 agent 的指令
 docs/deploy-cheap-server.md   从买服务器到跑通的完整教程
 ```
 
 ## 快速开始
 
-看 [docs/deploy-cheap-server.md](docs/deploy-cheap-server.md)，从零到跑通。
-有 Codex / Claude Code 的话，直接把教程丢给它替你装。
+**最省事**：打开 [INSTALL_PROMPT.md](INSTALL_PROMPT.md)，把提示词填好丢给你的
+Codex / Claude Code，它替你装完整套。
+
+**想自己动手**：看 [docs/deploy-cheap-server.md](docs/deploy-cheap-server.md)，从零到跑通。
 
 ## 把账算明白
 

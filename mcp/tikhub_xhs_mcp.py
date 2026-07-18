@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
-"""TikHub Xiaohongshu MCP server (stdio, zero dependency).
+"""TikHub social-media MCP server (stdio, zero dependency).
 
-Wraps a small, agent-friendly subset of TikHub's Xiaohongshu App V2 API:
-notes search, note detail, comments, and user/creator research.
+Wraps an agent-friendly subset of TikHub's APIs across four platforms:
+- Xiaohongshu (App V2): notes search / detail / comments / creators
+- Douyin: video by share url / keyword search / comments
+- WeChat MP (公众号): article content by url / account article list
+- WeChat Channels (视频号): search / video detail
 
 Usage:
     export TIKHUB_API_KEY=...   # create one at https://tikhub.io
@@ -39,23 +42,25 @@ for _stream in (sys.stdin, sys.stdout, sys.stderr):
         pass
 
 
-def _request(path: str, params: dict) -> dict:
+def _request(path: str, params: dict | None = None, json_body: dict | None = None) -> dict:
     if not API_KEY:
         return {"ok": False, "error": {"code": "MISSING_API_KEY", "message": "Set TIKHUB_API_KEY (get one at https://tikhub.io)"}}
-    query = {k: v for k, v in params.items() if v not in (None, "")}
     url = API_BASE + path
-    if query:
-        url += "?" + urllib.parse.urlencode(query)
-    req = urllib.request.Request(
-        url,
-        method="GET",
-        headers={
-            "Authorization": f"Bearer {API_KEY}",
-            "Accept": "application/json",
-            # TikHub's Cloudflare blocks python-urllib's default UA; identify ourselves properly.
-            "User-Agent": "hermes-media-suite/1.0 (+https://github.com/chenchen1010/hermes-media-suite)",
-        },
-    )
+    if params:
+        query = {k: v for k, v in params.items() if v not in (None, "")}
+        if query:
+            url += "?" + urllib.parse.urlencode(query)
+    body = None
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",
+        "Accept": "application/json",
+        # TikHub's Cloudflare blocks python-urllib's default UA; identify ourselves properly.
+        "User-Agent": "hermes-media-suite/1.0 (+https://github.com/chenchen1010/hermes-media-suite)",
+    }
+    if json_body is not None:
+        body = json.dumps({k: v for k, v in json_body.items() if v not in (None, "")}, ensure_ascii=False).encode("utf-8")
+        headers["Content-Type"] = "application/json"
+    req = urllib.request.Request(url, data=body, method="POST" if json_body is not None else "GET", headers=headers)
     try:
         with urllib.request.urlopen(req, timeout=API_TIMEOUT_SECONDS) as resp:
             return json.loads(resp.read().decode("utf-8"))
@@ -164,6 +169,94 @@ TOOLS = [
             },
         },
     },
+    {
+        "name": "douyin_fetch_video_by_share_url",
+        "description": "用抖音分享链接直接获取视频完整数据（标题、文案、作者、互动数、播放地址等）。丢一条分享链接进来即可，是处理'收藏的抖音视频'的主力工具。",
+        "inputSchema": {
+            "type": "object",
+            "required": ["share_url"],
+            "properties": {"share_url": {"type": "string", "description": "抖音 App 里复制的分享链接（v.douyin.com 短链或完整链接均可）"}},
+        },
+    },
+    {
+        "name": "douyin_search_videos",
+        "description": "抖音关键词综合搜索。适合看一个话题在抖音的内容生态和爆款角度。",
+        "inputSchema": {
+            "type": "object",
+            "required": ["keyword"],
+            "properties": {
+                "keyword": {"type": "string"},
+                "cursor": {"type": "integer", "description": "翻页游标，来自上一页响应"},
+                "sort_type": {"type": "string", "description": "排序方式，不填为综合；具体可选值以 TikHub 文档为准"},
+                "publish_time": {"type": "string", "description": "发布时间过滤，具体可选值以 TikHub 文档为准"},
+            },
+        },
+    },
+    {
+        "name": "douyin_fetch_video_comments",
+        "description": "获取抖音视频评论。aweme_id 从视频数据里拿。",
+        "inputSchema": {
+            "type": "object",
+            "required": ["aweme_id"],
+            "properties": {
+                "aweme_id": {"type": "string"},
+                "cursor": {"type": "integer"},
+                "count": {"type": "integer", "description": "单页数量"},
+            },
+        },
+    },
+    {
+        "name": "wechat_search",
+        "description": "微信搜一搜全局搜索：一个入口覆盖公众号账号、文章、视频号视频、直播。看一个话题在微信生态里的内容分布。",
+        "inputSchema": {
+            "type": "object",
+            "required": ["keyword"],
+            "properties": {
+                "keyword": {"type": "string", "description": "搜索关键词（1-100 字）"},
+                "business_type": {"type": "string", "enum": ["all", "account", "article", "video", "live_stream"], "default": "all", "description": "垂类：综合/公众号/文章/视频号视频/直播"},
+                "sort": {"type": "string", "enum": ["default", "latest", "hot"], "description": "排序：相关性/最新/最热"},
+                "publish_time": {"type": "string", "enum": ["all", "day", "week", "half_year"], "description": "发布时间过滤"},
+                "cursor": {"type": "string", "description": "翻页游标：首页留空，翻页传上一页响应返回的 cursor"},
+            },
+        },
+    },
+    {
+        "name": "wechat_mp_fetch_article",
+        "description": "用公众号文章链接获取文章完整内容（结构化正文）。是处理'收藏的公众号文章'的主力工具——拿到正文后可直接交给整理流程。",
+        "inputSchema": {
+            "type": "object",
+            "required": ["url"],
+            "properties": {
+                "url": {"type": "string", "description": "公众号文章链接（https://mp.weixin.qq.com/s/… 或带 __biz 的长链）"},
+                "raw": {"type": "boolean", "default": False, "description": "False=精简解析结构（默认，省 token）；True=原始响应"},
+            },
+        },
+    },
+    {
+        "name": "wechat_mp_fetch_account_articles",
+        "description": "获取某个公众号的文章列表。适合拆解一个对标公众号在持续发什么。",
+        "inputSchema": {
+            "type": "object",
+            "required": ["username"],
+            "properties": {
+                "username": {"type": "string", "description": "公众号 gh_username（gh_ 开头），可从文章详情数据中获得"},
+                "page_size": {"type": "integer", "minimum": 10, "maximum": 20, "default": 20},
+                "offset": {"type": "string", "description": "翻页游标（base64），首页留空，翻页传上一页响应的 next_offset"},
+            },
+        },
+    },
+    {
+        "name": "channels_fetch_video_detail",
+        "description": "获取视频号作品详情。直接丢视频号分享短链（https://weixin.qq.com/sph/…）即可，是处理'收藏的视频号视频'的主力工具。",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "share_url": {"type": "string", "description": "视频号分享短链（最常用）"},
+                "object_id": {"type": "string", "description": "作品 objectId（纯数字，优先级高于 share_url）"},
+                "export_id": {"type": "string", "description": "搜索结果中的 exportId（export/ 开头，会过期需尽快用）"},
+            },
+        },
+    },
 ]
 
 
@@ -204,6 +297,49 @@ def _tool_call(name: str, args: dict) -> dict:
         return _request(APP_V2 + "/get_user_posted_notes", {"user_id": args.get("user_id"), "share_text": share_text, "cursor": args.get("cursor")})
     if name == "xhs_search_users":
         return _request(APP_V2 + "/search_users", {"keyword": args.get("keyword", ""), "page": args.get("page")})
+    if name == "douyin_fetch_video_by_share_url":
+        return _request("/api/v1/douyin/app/v3/fetch_one_video_by_share_url", {"share_url": args.get("share_url", "")})
+    if name == "douyin_search_videos":
+        return _request("/api/v1/douyin/search/fetch_general_search_v1", json_body={
+            "keyword": args.get("keyword", ""),
+            "cursor": args.get("cursor"),
+            "sort_type": args.get("sort_type"),
+            "publish_time": args.get("publish_time"),
+        })
+    if name == "douyin_fetch_video_comments":
+        return _request("/api/v1/douyin/app/v3/fetch_video_comments", {
+            "aweme_id": args.get("aweme_id", ""),
+            "cursor": args.get("cursor"),
+            "count": args.get("count"),
+        })
+    if name == "wechat_search":
+        return _request("/api/v1/wechat_search/v2/fetch_search", json_body={
+            "keyword": args.get("keyword", ""),
+            "business_type": args.get("business_type") or "all",
+            "sort": args.get("sort"),
+            "publish_time": args.get("publish_time"),
+            "cursor": args.get("cursor"),
+            "raw": False,
+        })
+    if name == "wechat_mp_fetch_article":
+        return _request("/api/v1/wechat_mp/v2/fetch_article_detail", json_body={
+            "url": args.get("url", ""),
+            "raw": bool(args.get("raw", False)),
+        })
+    if name == "wechat_mp_fetch_account_articles":
+        return _request("/api/v1/wechat_mp/v2/fetch_account_articles", json_body={
+            "username": args.get("username", ""),
+            "page_size": args.get("page_size"),
+            "offset": args.get("offset"),
+            "raw": False,
+        })
+    if name == "channels_fetch_video_detail":
+        return _request("/api/v1/wechat_channels/v2/fetch_video_detail", json_body={
+            "share_url": args.get("share_url"),
+            "object_id": args.get("object_id"),
+            "export_id": args.get("export_id"),
+            "raw": False,
+        })
     return {"ok": False, "error": {"code": "UNKNOWN_TOOL", "message": name}}
 
 
@@ -225,7 +361,7 @@ def main() -> int:
             params = message.get("params") or {}
             msg_id = message.get("id")
             if method == "initialize":
-                _reply(msg_id, {"protocolVersion": "2024-11-05", "capabilities": {"tools": {}}, "serverInfo": {"name": "tikhub-xhs", "version": "1.0.0"}})
+                _reply(msg_id, {"protocolVersion": "2024-11-05", "capabilities": {"tools": {}}, "serverInfo": {"name": "tikhub-social", "version": "1.1.0"}})
             elif method == "tools/list":
                 _reply(msg_id, {"tools": TOOLS})
             elif method == "tools/call":

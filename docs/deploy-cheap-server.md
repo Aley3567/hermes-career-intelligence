@@ -12,7 +12,7 @@
 | --- | --- | --- |
 | 云服务器 | 2核2G、Debian/Ubuntu 的入门轻量云主机就够 | 一百元上下一年（各家活动价常见） |
 | 大模型 API key | OpenRouter / DeepSeek 等任选，Hermes 不锁模型 | 按用量，deepseek 性价比高 |
-| TikHub API key | 只有要用小红书调研 agent 才需要。注册：https://user.tikhub.io/register?ref=EJ7Ka9h8（带作者推荐码，不加价，介意可去掉 ref 参数） | 按调用次数计费 |
+| TikHub API key | 只有要用社媒调研 agent 才需要。注册：https://user.tikhub.io/register?ref=EJ7Ka9h8（带作者推荐码，不加价，介意可去掉 ref 参数） | 按调用次数计费 |
 | Telegram 账号 | 用来跟 agent 说话（微信接入见文末说明） | 免费 |
 
 提示：服务器选境外节点访问模型 API 和 TikHub 通常更顺；选境内节点则相反，自己权衡。
@@ -47,10 +47,10 @@ pip3 install faster-whisper
 
 ```bash
 hermes profile create media-transcriber
-hermes profile create xhs-research
+hermes profile create social-research
 ```
 
-把 `profiles/media-transcriber.md` 和 `profiles/xhs-research.md` 的内容
+把 `profiles/media-transcriber.md` 和 `profiles/social-research.md` 的内容
 分别配置为对应 profile 的常驻指令（Hermes 的 profile/skill 机制见官方文档；
 最省事的办法：进入对应 profile 的会话，让它读仓库里的指令文件并保存为自己的技能）。
 
@@ -67,7 +67,7 @@ mcp_servers:
       TIKHUB_API_KEY: "你的 TikHub key"
 ```
 
-路径按你实际克隆的位置改。重启 Hermes 后，agent 就能看到 7 个小红书工具。
+路径按你实际克隆的位置改。重启 Hermes 后，agent 就能看到 14 个跨平台采集工具（小红书/抖音/公众号/视频号）。
 
 ## 6. 接 Telegram（随时随地使唤它）
 
@@ -79,13 +79,13 @@ mcp_servers:
 ```
 
 ```text
-搜一下小红书上「手冲咖啡」相关的笔记，看看大家都在发什么角度。
+搜一下小红书和抖音上「手冲咖啡」相关的内容，看看大家都在发什么角度。
 ```
 
 ## 7. 冒烟测试清单
 
 - [ ] `hermes -p media-transcriber chat` 里丢一个带字幕的视频链接，能返回整理稿
-- [ ] `hermes -p xhs-research chat` 里搜一个关键词，能返回笔记样本和归纳
+- [ ] `hermes -p social-research chat` 里搜一个关键词，能返回笔记样本和归纳
 - [ ] Telegram 里发消息，服务器上的 agent 有响应
 - [ ] 关掉自己的电脑，再发一条——它还在干活（这就是挂在服务器上的意义）
 
