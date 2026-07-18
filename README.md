@@ -30,7 +30,7 @@ docs/deploy-cheap-server.md   从买服务器到跑通的完整教程
 | --- | --- |
 | 服务器 | 一百元上下一年（入门轻量云主机） |
 | 大模型 | 自己的 key，用多少花多少（deepseek 性价比高；有 ChatGPT 会员也可接入共享额度） |
-| TikHub | 按调用计费，只在用小红书调研时产生；响应带 24h 免费 cache_url |
+| TikHub | 按调用计费，只在用小红书调研时产生；响应带 24h 免费 cache_url。注册入口：[user.tikhub.io/register?ref=EJ7Ka9h8](https://user.tikhub.io/register?ref=EJ7Ka9h8)（带我的推荐码，不加价，介意可去掉 ref 参数） |
 
 软件本身全部免费开源。
 

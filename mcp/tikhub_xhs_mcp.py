@@ -49,7 +49,12 @@ def _request(path: str, params: dict) -> dict:
     req = urllib.request.Request(
         url,
         method="GET",
-        headers={"Authorization": f"Bearer {API_KEY}", "Accept": "application/json"},
+        headers={
+            "Authorization": f"Bearer {API_KEY}",
+            "Accept": "application/json",
+            # TikHub's Cloudflare blocks python-urllib's default UA; identify ourselves properly.
+            "User-Agent": "hermes-media-suite/1.0 (+https://github.com/chenchen1010/hermes-media-suite)",
+        },
     )
     try:
         with urllib.request.urlopen(req, timeout=API_TIMEOUT_SECONDS) as resp:

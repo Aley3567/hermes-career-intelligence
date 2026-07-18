@@ -12,7 +12,7 @@
 | --- | --- | --- |
 | 云服务器 | 2核2G、Debian/Ubuntu 的入门轻量云主机就够 | 一百元上下一年（各家活动价常见） |
 | 大模型 API key | OpenRouter / DeepSeek 等任选，Hermes 不锁模型 | 按用量，deepseek 性价比高 |
-| TikHub API key | 只有要用小红书调研 agent 才需要，https://tikhub.io 注册 | 按调用次数计费 |
+| TikHub API key | 只有要用小红书调研 agent 才需要。注册：https://user.tikhub.io/register?ref=EJ7Ka9h8（带作者推荐码，不加价，介意可去掉 ref 参数） | 按调用次数计费 |
 | Telegram 账号 | 用来跟 agent 说话（微信接入见文末说明） | 免费 |
 
 提示：服务器选境外节点访问模型 API 和 TikHub 通常更顺；选境内节点则相反，自己权衡。
