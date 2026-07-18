@@ -39,6 +39,13 @@ docs/deploy-cheap-server.md   从买服务器到跑通的完整教程
 
 软件本身全部免费开源。
 
+## 为什么自己写 MCP，不用 TikHub 官方的？
+
+TikHub 有官方 MCP（本地版是 Windows .exe，另有托管版）。没用它的原因：本地版跑不了 Linux 服务器；
+它的 API 全集有一千多个端点、十几个平台，通用封装塞给 agent 会把模型淹死在工具选择里。
+这里是为「收藏处理 + 社媒调研」场景策展的 20 个工具，零依赖单文件，你花五分钟就能把代码审完。
+需要更多平台的，官方 MCP 和 SDK 在 github.com/TikHub。
+
 ## 致谢
 
 - [Hermes](https://github.com/NousResearch/hermes-agent) —— 底座 agent 框架（本仓库与 Nous Research 无关联，仅为使用者）
