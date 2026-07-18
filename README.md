@@ -18,7 +18,7 @@
 
 ```
 INSTALL_PROMPT.md             一键安装提示词：复制丢给 Codex/Claude Code，替你装完整套
-mcp/tikhub_xhs_mcp.py         TikHub 四平台采集 MCP（零依赖，14 个工具，全部真实调用验证过）
+mcp/tikhub_xhs_mcp.py         TikHub 四平台采集 MCP（零依赖，20 个工具，主链路真实调用验证过）
 profiles/media-transcriber.md 转录整理 agent 的指令
 profiles/social-research.md   四平台社媒调研 agent 的指令
 docs/deploy-cheap-server.md   从买服务器到跑通的完整教程

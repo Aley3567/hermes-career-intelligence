@@ -37,7 +37,7 @@
 4. 创建两个 Hermes profile：`media-transcriber` 和 `social-research`，
    分别把仓库 `profiles/media-transcriber.md` 和 `profiles/social-research.md` 的内容配置为它们的常驻指令。
 5. 如果我给了 TikHub key：把仓库 `mcp/tikhub_xhs_mcp.py` 配置进 `~/.hermes/config.yaml` 的
-   `mcp_servers`（command: python3, args: [该文件在服务器上的绝对路径], env: TIKHUB_API_KEY），重启 Hermes 验证 14 个工具可见。
+   `mcp_servers`（command: python3, args: [该文件在服务器上的绝对路径], env: TIKHUB_API_KEY），重启 Hermes 验证 20 个工具可见。
 6. 安装并绑定 lark-cli（agent 操作飞书的通道）：
    - `npm install -g @larksuite/cli`
    - 用我的飞书自建应用凭证初始化：`lark-cli config init`（App Secret 通过 stdin 方式传入，不要留在 shell 历史里）

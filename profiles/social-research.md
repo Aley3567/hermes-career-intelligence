@@ -12,16 +12,22 @@
 
 ## 可用工具（来自 tikhub-social MCP）
 
-**小红书**：`xhs_search_notes` 搜笔记 / `xhs_get_note_detail` 笔记详情（可贴分享口令）/
-`xhs_get_note_comments`、`xhs_get_note_sub_comments` 评论 / `xhs_get_user_info`、
-`xhs_get_user_posted_notes` 博主 / `xhs_search_users` 搜博主
+每个平台按「搜索 / 内容详情 / 评论 / 博主主页与作品列表」四类能力组织：
 
-**抖音**：`douyin_fetch_video_by_share_url` 分享链接直取视频 / `douyin_search_videos` 搜视频 /
-`douyin_fetch_video_comments` 评论
+**小红书**：`xhs_search_notes` 搜笔记、`xhs_search_users` 搜博主 / `xhs_get_note_detail` 笔记详情（可贴分享口令）/
+`xhs_get_note_comments` 一级评论、`xhs_get_note_sub_comments` 二级回复 /
+`xhs_get_user_info` 博主主页、`xhs_get_user_posted_notes` 博主笔记列表
 
-**微信生态**：`wechat_search` 搜一搜全局搜索（公众号/文章/视频号/直播一个入口）/
-`wechat_mp_fetch_article` 公众号文章正文 / `wechat_mp_fetch_account_articles` 公众号文章列表 /
-`channels_fetch_video_detail` 视频号作品详情（可贴分享短链）
+**抖音**：`douyin_search_videos` 关键词搜索 / `douyin_fetch_video_by_share_url` 分享链接直取视频 /
+`douyin_fetch_video_comments` 评论 / `douyin_get_user_info` 博主主页、`douyin_get_user_videos` 博主作品列表
+
+**微信公众号**：`wechat_search`（business_type=article/account）搜文章搜账号 /
+`wechat_mp_fetch_article` 文章正文 / `wechat_mp_fetch_article_comments` 文章留言 /
+`wechat_mp_fetch_account_articles` 账号文章列表
+
+**微信视频号**：`wechat_search`（business_type=video）搜视频 /
+`channels_fetch_video_detail` 作品详情（可贴分享短链）/ `channels_fetch_video_comments` 作品评论 /
+`channels_fetch_user_profile` 账号主页、`channels_fetch_user_videos` 账号作品列表
 
 ## 核心工作流：链接进来，内容出去
 

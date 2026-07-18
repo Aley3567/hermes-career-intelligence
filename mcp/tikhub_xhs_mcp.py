@@ -206,6 +206,28 @@ TOOLS = [
         },
     },
     {
+        "name": "douyin_get_user_info",
+        "description": "获取抖音用户/博主主页信息。sec_user_id 从视频数据或搜索结果里拿。",
+        "inputSchema": {
+            "type": "object",
+            "required": ["sec_user_id"],
+            "properties": {"sec_user_id": {"type": "string", "description": "用户 sec_user_id（MS4w 开头）"}},
+        },
+    },
+    {
+        "name": "douyin_get_user_videos",
+        "description": "获取抖音用户主页作品列表。适合拆解对标账号的内容结构。",
+        "inputSchema": {
+            "type": "object",
+            "required": ["sec_user_id"],
+            "properties": {
+                "sec_user_id": {"type": "string"},
+                "max_cursor": {"type": "integer", "description": "翻页游标，来自上一页响应"},
+                "count": {"type": "integer", "description": "单页数量"},
+            },
+        },
+    },
+    {
         "name": "wechat_search",
         "description": "微信搜一搜全局搜索：一个入口覆盖公众号账号、文章、视频号视频、直播。看一个话题在微信生态里的内容分布。",
         "inputSchema": {
@@ -254,6 +276,52 @@ TOOLS = [
                 "share_url": {"type": "string", "description": "视频号分享短链（最常用）"},
                 "object_id": {"type": "string", "description": "作品 objectId（纯数字，优先级高于 share_url）"},
                 "export_id": {"type": "string", "description": "搜索结果中的 exportId（export/ 开头，会过期需尽快用）"},
+            },
+        },
+    },
+    {
+        "name": "wechat_mp_fetch_article_comments",
+        "description": "获取公众号文章的留言/评论。评论区是读者真实反馈的富矿。",
+        "inputSchema": {
+            "type": "object",
+            "required": ["url"],
+            "properties": {
+                "url": {"type": "string", "description": "公众号文章链接"},
+                "buffer": {"type": "string", "description": "翻页游标，来自上一页响应"},
+            },
+        },
+    },
+    {
+        "name": "channels_fetch_video_comments",
+        "description": "获取视频号作品评论。object_id 从作品详情或搜索结果里拿；传 comment_id 可拉某条评论的回复。",
+        "inputSchema": {
+            "type": "object",
+            "required": ["object_id"],
+            "properties": {
+                "object_id": {"type": "string"},
+                "comment_id": {"type": "string", "description": "可选，拉这条评论下的回复"},
+                "last_buffer": {"type": "string", "description": "翻页游标，来自上一页响应"},
+            },
+        },
+    },
+    {
+        "name": "channels_fetch_user_profile",
+        "description": "获取视频号账号主页资料与统计。username 从作品详情或搜索结果里拿。",
+        "inputSchema": {
+            "type": "object",
+            "required": ["username"],
+            "properties": {"username": {"type": "string", "description": "视频号 username"}},
+        },
+    },
+    {
+        "name": "channels_fetch_user_videos",
+        "description": "获取视频号账号的作品列表。适合拆解对标视频号的内容结构。",
+        "inputSchema": {
+            "type": "object",
+            "required": ["username"],
+            "properties": {
+                "username": {"type": "string"},
+                "last_buffer": {"type": "string", "description": "翻页游标，来自上一页响应"},
             },
         },
     },
@@ -311,6 +379,35 @@ def _tool_call(name: str, args: dict) -> dict:
             "aweme_id": args.get("aweme_id", ""),
             "cursor": args.get("cursor"),
             "count": args.get("count"),
+        })
+    if name == "douyin_get_user_info":
+        return _request("/api/v1/douyin/app/v3/handler_user_profile", {"sec_user_id": args.get("sec_user_id", "")})
+    if name == "douyin_get_user_videos":
+        return _request("/api/v1/douyin/app/v3/fetch_user_post_videos", {
+            "sec_user_id": args.get("sec_user_id", ""),
+            "max_cursor": args.get("max_cursor"),
+            "count": args.get("count"),
+        })
+    if name == "wechat_mp_fetch_article_comments":
+        return _request("/api/v1/wechat_mp/v2/fetch_article_comments", json_body={
+            "url": args.get("url", ""),
+            "buffer": args.get("buffer"),
+            "raw": False,
+        })
+    if name == "channels_fetch_video_comments":
+        return _request("/api/v1/wechat_channels/v2/fetch_video_comments", json_body={
+            "object_id": args.get("object_id", ""),
+            "comment_id": args.get("comment_id"),
+            "last_buffer": args.get("last_buffer"),
+            "raw": False,
+        })
+    if name == "channels_fetch_user_profile":
+        return _request("/api/v1/wechat_channels/v2/fetch_user_profile", json_body={"username": args.get("username", ""), "raw": False})
+    if name == "channels_fetch_user_videos":
+        return _request("/api/v1/wechat_channels/v2/fetch_user_videos", json_body={
+            "username": args.get("username", ""),
+            "last_buffer": args.get("last_buffer"),
+            "raw": False,
         })
     if name == "wechat_search":
         return _request("/api/v1/wechat_search/v2/fetch_search", json_body={
