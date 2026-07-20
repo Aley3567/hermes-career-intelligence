@@ -61,7 +61,7 @@ TikHub 有官方 MCP 生态（托管版 mcp.tikhub.io、`pip install tikhub-mcp`
 我持续做的新 workflows / skills 会第一时间发在里面（本仓库就是从里面长出来的），
 装机和使用中卡住了也可以来找我聊。懒得自己动手的，我也可以帮你装。
 
-加微信 **BurningChen**，备注「星球」。
+加微信 **BurningChen1010**，备注「星球」。
 
 ## License
 
