@@ -1,0 +1,28 @@
+{
+  "profile_id": "primary",
+  "education": "中国本科学生",
+  "major": null,
+  "location": "中国",
+  "target_roles": ["AI Agent 实习", "LLM Application", "大模型应用开发"],
+  "target_companies": [],
+  "skills": [],
+  "learning_topics": [
+    "dict", "list", "tuple", "set", "function", "class/object",
+    "exceptions", "module/package", "async/await", "typing", "JSON",
+    "HTTP/API", "Pydantic", "FastAPI", "async concurrency",
+    "Tool Calling", "Message", "State", "Memory", "RAG",
+    "Workflow/DAG", "AgentScope 2.0"
+  ],
+  "projects": [],
+  "strengths": [],
+  "weaknesses": [],
+  "experience": [],
+  "resume_state": "未记录",
+  "interview_history": [],
+  "current_goals": ["尽快形成真正具有实习竞争力的 AI Agent 项目和技术能力"],
+  "career_stage": "本科在读，准备实习",
+  "short_term_plan": ["围绕 AgentScope 2.0 项目反向补齐 Python 与 Agent 工程能力"],
+  "long_term_plan": ["具备 AI Agent / LLM Application 实习竞争力"],
+  "updated_at": "2026-09-05T00:00:00Z"
+}
+
