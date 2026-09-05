@@ -96,6 +96,11 @@ TOOLS = [
                 "page": {"type": "integer", "minimum": 1, "default": 1, "description": "页码，翻页时递增"},
                 "sort_type": {"type": "string", "description": "排序方式，不填为综合排序；具体可选值以 TikHub 文档为准"},
                 "note_type": {"type": "string", "description": "笔记类型过滤（如 全部/图文/视频），具体可选值以 TikHub 文档为准"},
+                "time_filter": {"type": "string", "description": "发布时间过滤，如 不限/一天内/一周内/半年内"},
+                "search_id": {"type": "string", "description": "翻页时传首次搜索返回的 search_id"},
+                "search_session_id": {"type": "string", "description": "翻页时传首次搜索返回的 search_session_id"},
+                "source": {"type": "string", "description": "搜索来源，默认 explore_feed"},
+                "ai_mode": {"type": "integer", "enum": [0, 1], "description": "TikHub 搜索 AI 模式开关"},
             },
         },
     },
@@ -131,6 +136,7 @@ TOOLS = [
                 "comment_id": {"type": "string", "description": "一级评论 ID"},
                 **ID_OR_SHARE,
                 "cursor": {"type": "string", "description": "翻页游标"},
+                "index": {"type": "integer", "minimum": 1, "default": 1, "description": "分页索引，需和 cursor 一起沿用"},
             },
         },
     },
@@ -337,6 +343,11 @@ def _tool_call(name: str, args: dict) -> dict:
             "page": args.get("page"),
             "sort_type": args.get("sort_type"),
             "note_type": args.get("note_type"),
+            "time_filter": args.get("time_filter"),
+            "search_id": args.get("search_id"),
+            "search_session_id": args.get("search_session_id"),
+            "source": args.get("source"),
+            "ai_mode": args.get("ai_mode"),
         })
     if name == "xhs_get_note_detail":
         kind = args.get("note_type") or "auto"
@@ -358,6 +369,7 @@ def _tool_call(name: str, args: dict) -> dict:
             "note_id": note_id,
             "share_text": share_text,
             "cursor": args.get("cursor"),
+            "index": args.get("index"),
         })
     if name == "xhs_get_user_info":
         return _request(APP_V2 + "/get_user_info", {"user_id": args.get("user_id"), "share_text": share_text})

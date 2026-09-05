@@ -1,0 +1,5 @@
+{
+  "ok": false,
+  "request_id": "req-error-001",
+  "error": {"code": "HTTP_ERROR", "status": 503, "body": "fictional-secret-token-should-not-leak"}
+}

@@ -1,6 +1,6 @@
 # GitHub Issues Backlog
 
-Fork 可写后按以下顺序创建；每项都能独立验收。
+Issues #2–#10 已创建；每项都能独立验收。前四项由 Phase 1 PR 覆盖，后续工作以线上 Issue 为准。
 
 1. **[P0] Establish fork baseline and upstream remote**  
    验收：`origin` 指向 `Aley3567/hermes-career-intelligence`，`upstream` 指向原仓库，记录基线 commit。
@@ -26,4 +26,3 @@ Fork 可写后按以下顺序创建；每项都能独立验收。
     验收：健康检查、重启恢复、日志脱敏、`.env.example` 完整。
 12. **[P6] Run the real XHS career pilot**  
     验收：真实来源 ResearchPack；每个重要 Claim 有 Evidence；列明采样限制。
-

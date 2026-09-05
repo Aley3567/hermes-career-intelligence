@@ -1,0 +1,6 @@
+{
+  "ok": true,
+  "request_id": "req-comments-001",
+  "cache_url": "https://fictional.invalid/cache/comments-001",
+  "data": {"comments": [{"comment_id": "comment-001", "content": "很有启发的虚构评论", "like_count": "1.2万", "sub_comment_count": 2, "create_time": 1735689600123, "user": {"user_id": "user-002", "nickname": "周岚"}}], "next_cursor": "cursor-comments-002", "has_more": true}
+}
