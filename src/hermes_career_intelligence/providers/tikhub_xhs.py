@@ -301,6 +301,8 @@ class TikHubXHSProvider:
     def search_creators(self, keyword: str, *, page: int = 1) -> CreatorPage:
         if not keyword.strip():
             raise ValueError("keyword must not be blank")
+        if page < 1:
+            raise ValueError("page must be at least 1")
         envelope, payload = self._call("xhs_search_users", {"keyword": keyword.strip(), "page": page})
         records = _find_list(payload, ("items", "users", "user_list", "list"))
         meta = _page_metadata(envelope, payload)
