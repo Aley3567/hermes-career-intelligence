@@ -3,8 +3,10 @@ from __future__ import annotations
 import unittest
 from datetime import UTC, datetime
 
+from pydantic import ValidationError
+
 from hermes_career_intelligence.mock_data import initial_profile, mock_samples
-from hermes_career_intelligence.research import CareerResearchEngine, creator_score
+from hermes_career_intelligence.research import CareerResearchEngine, ResearchSample, creator_score
 
 
 class ResearchEngineTests(unittest.TestCase):
@@ -40,7 +42,16 @@ class ResearchEngineTests(unittest.TestCase):
         self.assertTrue(any("evaluation" in item.casefold() for item in signals))
         self.assertIn("Agent Evaluation", gaps)
 
+    def test_research_sample_rejects_naive_published_at(self) -> None:
+        payload = self.samples[0].model_dump()
+        payload["published_at"] = datetime(2026, 9, 1, 12, 0, 0)
+        with self.assertRaises(ValidationError):
+            ResearchSample.model_validate(payload)
+
+    def test_engine_rejects_naive_now(self) -> None:
+        with self.assertRaises(ValueError):
+            CareerResearchEngine(datetime(2026, 9, 5, 12, 0, 0))
+
 
 if __name__ == "__main__":
     unittest.main()
-

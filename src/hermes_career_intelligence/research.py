@@ -9,7 +9,7 @@ from __future__ import annotations
 from collections import defaultdict
 from datetime import UTC, datetime
 
-from pydantic import Field
+from pydantic import Field, field_validator
 
 from .models import (
     Claim,
@@ -38,6 +38,13 @@ class ResearchSample(StrictModel):
     required_skill: str | None = None
     opposes: str | None = None
     historical_mentions: int = Field(default=0, ge=0)
+
+    @field_validator("published_at")
+    @classmethod
+    def published_at_must_be_timezone_aware(cls, value: datetime) -> datetime:
+        if value.tzinfo is None or value.utcoffset() is None:
+            raise ValueError("published_at must be timezone-aware")
+        return value.astimezone(UTC)
 
 
 DEFAULT_QUERIES = [
@@ -71,7 +78,10 @@ def _known_skills(profile: UserProfile) -> set[str]:
 
 class CareerResearchEngine:
     def __init__(self, now: datetime | None = None) -> None:
-        self.now = now or datetime.now(UTC)
+        resolved_now = now or datetime.now(UTC)
+        if resolved_now.tzinfo is None or resolved_now.utcoffset() is None:
+            raise ValueError("now must be timezone-aware")
+        self.now = resolved_now.astimezone(UTC)
 
     def run(
         self,

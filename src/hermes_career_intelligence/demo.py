@@ -21,14 +21,14 @@ def run_demo(database: str | Path = ":memory:") -> ResearchResult:
     pack = engine.run(QUESTION, profile, mock_samples())
     result = ResearchResult(run_id="mock_acceptance_run", pack=pack)
 
-    repository = SQLiteKnowledgeRepository(database)
-    repository.save_profile(profile)
-    for claim in pack.important_claims:
-        repository.save_claim(claim)
-        for evidence in pack.evidence_index:
-            if evidence.evidence_id in claim.supporting_evidence_ids:
-                repository.link_evidence(claim.claim_id, evidence)
-    repository.save_research_result(result)
+    with SQLiteKnowledgeRepository(database) as repository:
+        repository.save_profile(profile)
+        for claim in pack.important_claims:
+            repository.save_claim(claim)
+            for evidence in pack.evidence_index:
+                if evidence.evidence_id in claim.supporting_evidence_ids:
+                    repository.link_evidence(claim.claim_id, evidence)
+        repository.save_research_result(result)
     return result
 
 
@@ -52,4 +52,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
