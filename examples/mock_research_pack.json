@@ -1,0 +1,483 @@
+{
+  "topic": "AI Agent 实习生核心竞争力",
+  "research_questions": [
+    "研究最近小红书上大厂 HR、AI 从业者和求职博主怎么看 AI Agent 实习生的核心竞争力，并结合我的情况告诉我未来 30 天最应该补什么。"
+  ],
+  "queries_used": [
+    "AI Agent 实习",
+    "Agent 开发实习",
+    "大模型应用开发 实习",
+    "AI Agent 面试",
+    "Agent 项目 简历",
+    "大厂 AI 实习",
+    "HR AI Agent",
+    "Agent Evaluation 项目"
+  ],
+  "sources_scanned": 7,
+  "sources_selected": 7,
+  "creators_scanned": 6,
+  "videos_transcribed": 2,
+  "executive_summary": "Mock 垂直切片显示：工程闭环与可衡量的 Agent Evaluation 是当前最强信号，同时保留算法基础与工程交付侧重点的分歧。",
+  "consensus": [
+    {
+      "claim": {
+        "claim_id": "claim_agent_evaluation_required",
+        "claim_text": "Agent 项目应提供 evaluation 数据，证明工具成功率、成本与任务完成率。",
+        "normalized_claim": "agent_evaluation_required",
+        "topic": "项目质量",
+        "confidence": 0.95,
+        "source_count": 3,
+        "creator_count": 3,
+        "supporting_evidence_ids": [
+          "evidence_3",
+          "evidence_2",
+          "evidence_1"
+        ],
+        "counter_evidence_ids": [],
+        "first_seen": "2026-08-18T00:00:00Z",
+        "last_seen": "2026-09-01T00:00:00Z"
+      },
+      "rationale": "3 位独立创作者、3 条证据共同支持。"
+    },
+    {
+      "claim": {
+        "claim_id": "claim_engineering_loop_priority",
+        "claim_text": "Agent 实习更看重可运行的工程闭环，而不是只展示 API 调用。",
+        "normalized_claim": "engineering_loop_priority",
+        "topic": "能力侧重",
+        "confidence": 0.95,
+        "source_count": 2,
+        "creator_count": 2,
+        "supporting_evidence_ids": [
+          "evidence_5",
+          "evidence_4"
+        ],
+        "counter_evidence_ids": [],
+        "first_seen": "2026-08-15T00:00:00Z",
+        "last_seen": "2026-08-29T00:00:00Z"
+      },
+      "rationale": "2 位独立创作者、2 条证据共同支持。"
+    }
+  ],
+  "disagreements": [
+    {
+      "topic": "能力侧重",
+      "position_a": {
+        "label": "Position A",
+        "claim_text": "算法与模型基础仍是部分 Agent 岗位筛选的首要门槛。",
+        "evidence_ids": [
+          "evidence_6"
+        ]
+      },
+      "position_b": {
+        "label": "Position B",
+        "claim_text": "Agent 实习更看重可运行的工程闭环，而不是只展示 API 调用。",
+        "evidence_ids": [
+          "evidence_5",
+          "evidence_4"
+        ]
+      },
+      "possible_explanation": "岗位类型与团队成熟度不同，评价标准可能偏工程交付或算法基础。",
+      "user_relevance": "应同时保留工程闭环证据和必要算法基础，不把单一观点当成统一招聘标准。"
+    }
+  ],
+  "emerging_signals": [
+    {
+      "signal": "Agent 项目应提供 evaluation 数据，证明工具成功率、成本与任务完成率。",
+      "first_seen": "2026-08-18T00:00:00Z",
+      "recent_frequency": 3,
+      "historical_frequency": 0,
+      "supporting_evidence_ids": [
+        "evidence_3",
+        "evidence_2",
+        "evidence_1"
+      ],
+      "possible_implication": "近期需求密度上升，适合进入下一轮项目迭代与简历证据。"
+    },
+    {
+      "signal": "Agent 实习更看重可运行的工程闭环，而不是只展示 API 调用。",
+      "first_seen": "2026-08-15T00:00:00Z",
+      "recent_frequency": 2,
+      "historical_frequency": 0,
+      "supporting_evidence_ids": [
+        "evidence_5",
+        "evidence_4"
+      ],
+      "possible_implication": "近期需求密度上升，适合进入下一轮项目迭代与简历证据。"
+    }
+  ],
+  "important_claims": [
+    {
+      "claim_id": "claim_agent_evaluation_required",
+      "claim_text": "Agent 项目应提供 evaluation 数据，证明工具成功率、成本与任务完成率。",
+      "normalized_claim": "agent_evaluation_required",
+      "topic": "项目质量",
+      "confidence": 0.95,
+      "source_count": 3,
+      "creator_count": 3,
+      "supporting_evidence_ids": [
+        "evidence_3",
+        "evidence_2",
+        "evidence_1"
+      ],
+      "counter_evidence_ids": [],
+      "first_seen": "2026-08-18T00:00:00Z",
+      "last_seen": "2026-09-01T00:00:00Z"
+    },
+    {
+      "claim_id": "claim_engineering_loop_priority",
+      "claim_text": "Agent 实习更看重可运行的工程闭环，而不是只展示 API 调用。",
+      "normalized_claim": "engineering_loop_priority",
+      "topic": "能力侧重",
+      "confidence": 0.95,
+      "source_count": 2,
+      "creator_count": 2,
+      "supporting_evidence_ids": [
+        "evidence_5",
+        "evidence_4"
+      ],
+      "counter_evidence_ids": [],
+      "first_seen": "2026-08-15T00:00:00Z",
+      "last_seen": "2026-08-29T00:00:00Z"
+    },
+    {
+      "claim_id": "claim_algorithm_first",
+      "claim_text": "算法与模型基础仍是部分 Agent 岗位筛选的首要门槛。",
+      "normalized_claim": "algorithm_first",
+      "topic": "能力侧重",
+      "confidence": 0.754,
+      "source_count": 1,
+      "creator_count": 1,
+      "supporting_evidence_ids": [
+        "evidence_6"
+      ],
+      "counter_evidence_ids": [],
+      "first_seen": "2026-08-23T00:00:00Z",
+      "last_seen": "2026-08-23T00:00:00Z"
+    },
+    {
+      "claim_id": "claim_certificate_first",
+      "claim_text": "证书数量是 Agent 实习筛选的决定性指标。",
+      "normalized_claim": "certificate_first",
+      "topic": "简历筛选",
+      "confidence": 0.746,
+      "source_count": 1,
+      "creator_count": 1,
+      "supporting_evidence_ids": [
+        "evidence_7"
+      ],
+      "counter_evidence_ids": [],
+      "first_seen": "2026-08-31T00:00:00Z",
+      "last_seen": "2026-08-31T00:00:00Z"
+    }
+  ],
+  "top_creators": [
+    {
+      "creator_id": "creator_5",
+      "platform": "xiaohongshu",
+      "platform_creator_id": "mock_5",
+      "nickname": "Mock Agent 开发者 5",
+      "bio": "",
+      "profile_url": null,
+      "claimed_company": null,
+      "claimed_role": "Agent 开发者",
+      "topics": [
+        "AI Agent",
+        "实习",
+        "求职"
+      ],
+      "followers": null,
+      "engagement": 4750.0,
+      "content_count": 0,
+      "career_relevance": 0.88,
+      "signal_density": 0.8500000000000001,
+      "first_hand_experience_score": 0.84,
+      "credibility_score": 0.82,
+      "marketing_ratio": 0.05,
+      "useful_note_ratio": 0.79,
+      "last_seen": "2026-09-05T10:05:26.072680Z"
+    },
+    {
+      "creator_id": "creator_4",
+      "platform": "xiaohongshu",
+      "platform_creator_id": "mock_4",
+      "nickname": "Mock 算法工程师 4",
+      "bio": "",
+      "profile_url": null,
+      "claimed_company": null,
+      "claimed_role": "算法工程师",
+      "topics": [
+        "AI Agent",
+        "实习",
+        "求职"
+      ],
+      "followers": null,
+      "engagement": 4300.0,
+      "content_count": 0,
+      "career_relevance": 0.88,
+      "signal_density": 0.8400000000000001,
+      "first_hand_experience_score": 0.84,
+      "credibility_score": 0.82,
+      "marketing_ratio": 0.05,
+      "useful_note_ratio": 0.79,
+      "last_seen": "2026-09-05T10:05:26.072674Z"
+    },
+    {
+      "creator_id": "creator_3",
+      "platform": "xiaohongshu",
+      "platform_creator_id": "mock_3",
+      "nickname": "Mock 校招博主 3",
+      "bio": "",
+      "profile_url": null,
+      "claimed_company": null,
+      "claimed_role": "校招博主",
+      "topics": [
+        "AI Agent",
+        "实习",
+        "求职"
+      ],
+      "followers": null,
+      "engagement": 3850.0,
+      "content_count": 0,
+      "career_relevance": 0.88,
+      "signal_density": 0.8300000000000001,
+      "first_hand_experience_score": 0.84,
+      "credibility_score": 0.82,
+      "marketing_ratio": 0.05,
+      "useful_note_ratio": 0.79,
+      "last_seen": "2026-09-05T10:05:26.072669Z"
+    },
+    {
+      "creator_id": "creator_2",
+      "platform": "xiaohongshu",
+      "platform_creator_id": "mock_2",
+      "nickname": "Mock AI 工程师 2",
+      "bio": "",
+      "profile_url": null,
+      "claimed_company": null,
+      "claimed_role": "AI 工程师",
+      "topics": [
+        "AI Agent",
+        "实习",
+        "求职"
+      ],
+      "followers": null,
+      "engagement": 3400.0,
+      "content_count": 0,
+      "career_relevance": 0.88,
+      "signal_density": 0.8200000000000001,
+      "first_hand_experience_score": 0.84,
+      "credibility_score": 0.82,
+      "marketing_ratio": 0.05,
+      "useful_note_ratio": 0.79,
+      "last_seen": "2026-09-05T10:05:26.072665Z"
+    },
+    {
+      "creator_id": "creator_1",
+      "platform": "xiaohongshu",
+      "platform_creator_id": "mock_1",
+      "nickname": "Mock 大厂 HR 1",
+      "bio": "",
+      "profile_url": null,
+      "claimed_company": null,
+      "claimed_role": "大厂 HR",
+      "topics": [
+        "AI Agent",
+        "实习",
+        "求职"
+      ],
+      "followers": null,
+      "engagement": 2950.0,
+      "content_count": 0,
+      "career_relevance": 0.88,
+      "signal_density": 0.81,
+      "first_hand_experience_score": 0.84,
+      "credibility_score": 0.82,
+      "marketing_ratio": 0.05,
+      "useful_note_ratio": 0.79,
+      "last_seen": "2026-09-05T10:05:26.072658Z"
+    },
+    {
+      "creator_id": "creator_6",
+      "platform": "xiaohongshu",
+      "platform_creator_id": "mock_6",
+      "nickname": "Mock 招聘经理 6",
+      "bio": "",
+      "profile_url": null,
+      "claimed_company": null,
+      "claimed_role": "招聘经理",
+      "topics": [
+        "AI Agent",
+        "实习",
+        "求职"
+      ],
+      "followers": null,
+      "engagement": 5200.0,
+      "content_count": 0,
+      "career_relevance": 0.88,
+      "signal_density": 0.8600000000000001,
+      "first_hand_experience_score": 0.84,
+      "credibility_score": 0.82,
+      "marketing_ratio": 0.35,
+      "useful_note_ratio": 0.79,
+      "last_seen": "2026-09-05T10:05:26.072683Z"
+    }
+  ],
+  "user_skill_gaps": [
+    {
+      "skill": "Agent Evaluation",
+      "evidence_claim_ids": [
+        "claim_agent_evaluation_required"
+      ],
+      "current_state": "用户画像中尚未记录",
+      "target_state": "在可运行项目中实现，并提供可量化结果",
+      "priority": 5
+    },
+    {
+      "skill": "工程闭环",
+      "evidence_claim_ids": [
+        "claim_engineering_loop_priority"
+      ],
+      "current_state": "用户画像中尚未记录",
+      "target_state": "在可运行项目中实现，并提供可量化结果",
+      "priority": 5
+    },
+    {
+      "skill": "算法基础",
+      "evidence_claim_ids": [
+        "claim_algorithm_first"
+      ],
+      "current_state": "用户画像中尚未记录",
+      "target_state": "在可运行项目中实现，并提供可量化结果",
+      "priority": 4
+    }
+  ],
+  "recommended_actions": [
+    {
+      "title": "补齐 Agent Evaluation",
+      "rationale": "该能力由高价值来源重复提及，且用户画像尚无完成证据。",
+      "days": 10,
+      "success_metric": "项目中存在可运行的 Agent Evaluation 实现、测试与结果记录",
+      "related_gap": "Agent Evaluation"
+    },
+    {
+      "title": "补齐 工程闭环",
+      "rationale": "该能力由高价值来源重复提及，且用户画像尚无完成证据。",
+      "days": 7,
+      "success_metric": "项目中存在可运行的 工程闭环 实现、测试与结果记录",
+      "related_gap": "工程闭环"
+    },
+    {
+      "title": "补齐 算法基础",
+      "rationale": "该能力由高价值来源重复提及，且用户画像尚无完成证据。",
+      "days": 7,
+      "success_metric": "项目中存在可运行的 算法基础 实现、测试与结果记录",
+      "related_gap": "算法基础"
+    }
+  ],
+  "evidence_index": [
+    {
+      "evidence_id": "evidence_3",
+      "platform": "xiaohongshu",
+      "creator_id": "creator_5",
+      "content_id": "note_3",
+      "content_url": "https://www.xiaohongshu.com/mock/3",
+      "content_title": "Mock note 3",
+      "original_text": "Agent 项目应提供 evaluation 数据，证明工具成功率、成本与任务完成率。",
+      "stance": "supports",
+      "transcript_segment_id": "segment_3",
+      "transcript_start": 12.0,
+      "transcript_end": 27.0,
+      "collected_at": "2026-09-05T00:00:00Z"
+    },
+    {
+      "evidence_id": "evidence_6",
+      "platform": "xiaohongshu",
+      "creator_id": "creator_4",
+      "content_id": "note_6",
+      "content_url": "https://www.xiaohongshu.com/mock/6",
+      "content_title": "Mock note 6",
+      "original_text": "算法与模型基础仍是部分 Agent 岗位筛选的首要门槛。",
+      "stance": "supports",
+      "transcript_segment_id": null,
+      "transcript_start": null,
+      "transcript_end": null,
+      "collected_at": "2026-09-05T00:00:00Z"
+    },
+    {
+      "evidence_id": "evidence_5",
+      "platform": "xiaohongshu",
+      "creator_id": "creator_3",
+      "content_id": "note_5",
+      "content_url": "https://www.xiaohongshu.com/mock/5",
+      "content_title": "Mock note 5",
+      "original_text": "Agent 实习更看重可运行的工程闭环，而不是只展示 API 调用。",
+      "stance": "supports",
+      "transcript_segment_id": null,
+      "transcript_start": null,
+      "transcript_end": null,
+      "collected_at": "2026-09-05T00:00:00Z"
+    },
+    {
+      "evidence_id": "evidence_4",
+      "platform": "xiaohongshu",
+      "creator_id": "creator_2",
+      "content_id": "note_4",
+      "content_url": "https://www.xiaohongshu.com/mock/4",
+      "content_title": "Mock note 4",
+      "original_text": "Agent 实习更看重可运行的工程闭环，而不是只展示 API 调用。",
+      "stance": "supports",
+      "transcript_segment_id": null,
+      "transcript_start": null,
+      "transcript_end": null,
+      "collected_at": "2026-09-05T00:00:00Z"
+    },
+    {
+      "evidence_id": "evidence_2",
+      "platform": "xiaohongshu",
+      "creator_id": "creator_2",
+      "content_id": "note_2",
+      "content_url": "https://www.xiaohongshu.com/mock/2",
+      "content_title": "Mock note 2",
+      "original_text": "Agent 项目应提供 evaluation 数据，证明工具成功率、成本与任务完成率。",
+      "stance": "supports",
+      "transcript_segment_id": null,
+      "transcript_start": null,
+      "transcript_end": null,
+      "collected_at": "2026-09-05T00:00:00Z"
+    },
+    {
+      "evidence_id": "evidence_1",
+      "platform": "xiaohongshu",
+      "creator_id": "creator_1",
+      "content_id": "note_1",
+      "content_url": "https://www.xiaohongshu.com/mock/1",
+      "content_title": "Mock note 1",
+      "original_text": "Agent 项目应提供 evaluation 数据，证明工具成功率、成本与任务完成率。",
+      "stance": "supports",
+      "transcript_segment_id": "segment_1",
+      "transcript_start": 12.0,
+      "transcript_end": 27.0,
+      "collected_at": "2026-09-05T00:00:00Z"
+    },
+    {
+      "evidence_id": "evidence_7",
+      "platform": "xiaohongshu",
+      "creator_id": "creator_6",
+      "content_id": "note_7",
+      "content_url": "https://www.xiaohongshu.com/mock/7",
+      "content_title": "Mock note 7",
+      "original_text": "证书数量是 Agent 实习筛选的决定性指标。",
+      "stance": "supports",
+      "transcript_segment_id": null,
+      "transcript_start": null,
+      "transcript_end": null,
+      "collected_at": "2026-09-05T00:00:00Z"
+    }
+  ],
+  "limitations": [
+    "当前结果来自 MockSocialProvider，用于验证闭环，不代表真实平台结论。"
+  ],
+  "generated_at": "2026-09-05T00:00:00Z"
+}
+
