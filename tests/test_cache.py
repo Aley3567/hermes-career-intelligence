@@ -10,6 +10,7 @@ from hermes_career_intelligence.cache import (
     BudgetedMCPClient,
     ResearchBudget,
     SQLiteResponseCache,
+    build_budgeted_xhs_provider,
     bytes_fingerprint,
     content_fingerprint,
     media_fingerprint,
@@ -42,11 +43,13 @@ class CacheTests(unittest.TestCase):
         self.assertEqual(budget.total_provider_calls, 1)
         self.assertEqual(budget.cache_hits, 1)
 
-    def test_request_fingerprint_is_canonical_but_sensitive_to_tool_and_values(self) -> None:
+    def test_request_fingerprint_is_canonical_and_namespaced(self) -> None:
         base = request_fingerprint("search", {"q": "agent", "page": 1})
         self.assertEqual(base, request_fingerprint("search", {"page": 1, "q": "agent"}))
         self.assertNotEqual(base, request_fingerprint("other", {"q": "agent", "page": 1}))
         self.assertNotEqual(base, request_fingerprint("search", {"q": "career", "page": 1}))
+        self.assertNotEqual(base, request_fingerprint("search", {"q": "agent", "page": 1}, provider="other"))
+        self.assertNotEqual(base, request_fingerprint("search", {"q": "agent", "page": 1}, schema_version="v2"))
 
     def test_expired_response_calls_delegate_again_with_injected_clock(self) -> None:
         now = [datetime(2026, 1, 1, tzinfo=UTC)]
@@ -60,6 +63,14 @@ class CacheTests(unittest.TestCase):
 
     def test_error_response_is_not_cached(self) -> None:
         delegate = FakeMCPClient([{"ok": False, "error": {"code": "TEMP"}}, {"ok": True, "data": {"value": 2}}])
+        with SQLiteResponseCache() as cache:
+            client = BudgetedMCPClient(delegate, cache, ResearchBudget(3))
+            client.call("search", {"q": "agent"})
+            client.call("search", {"q": "agent"})
+        self.assertEqual(len(delegate.calls), 2)
+
+    def test_empty_data_response_is_not_cached(self) -> None:
+        delegate = FakeMCPClient([{"ok": True, "data": []}, {"ok": True, "data": {"value": 2}}])
         with SQLiteResponseCache() as cache:
             client = BudgetedMCPClient(delegate, cache, ResearchBudget(3))
             client.call("search", {"q": "agent"})
@@ -86,6 +97,48 @@ class CacheTests(unittest.TestCase):
         self.assertEqual(applied.cache_hits, 1)
         self.assertEqual(applied.estimated_cost_units, 1.5)
         self.assertEqual(run.provider_calls, {})
+
+    def test_bound_budget_updates_live_research_run(self) -> None:
+        run = ResearchRun(question="q", queries=["agent"])
+        budget = ResearchBudget(max_provider_calls=3, unit_costs={"search": 1.5}, run=run)
+        delegate = FakeMCPClient()
+        with SQLiteResponseCache() as cache:
+            client = BudgetedMCPClient(delegate, cache, budget)
+            client.call("search", {"q": "agent"})
+            client.call("search", {"q": "agent"})
+        self.assertEqual(run.provider_calls, {"search": 1})
+        self.assertEqual(run.cache_hits, 1)
+        self.assertEqual(run.estimated_cost_units, 1.5)
+
+    def test_budgeted_xhs_provider_is_the_production_wiring_path(self) -> None:
+        run = ResearchRun(question="q", queries=["AI Agent"])
+        delegate = FakeMCPClient(
+            [
+                {
+                    "ok": True,
+                    "data": {
+                        "items": [
+                            {
+                                "note_card": {
+                                    "note_id": "note-1",
+                                    "type": "normal",
+                                    "display_title": "Agent internship",
+                                    "desc": "evidence",
+                                }
+                            }
+                        ]
+                    },
+                }
+            ]
+        )
+        with SQLiteResponseCache() as cache:
+            provider, _ = build_budgeted_xhs_provider(delegate, run, cache, max_provider_calls=2)
+            first = provider.search_notes("AI Agent")
+            second = provider.search_notes("AI Agent")
+        self.assertEqual(first.items[0].platform_content_id, "note-1")
+        self.assertEqual(second.items[0].platform_content_id, "note-1")
+        self.assertEqual(run.provider_calls, {"xhs_search_notes": 1})
+        self.assertEqual(run.cache_hits, 1)
 
     def test_content_media_and_bytes_fingerprints_are_deterministic_and_sensitive(self) -> None:
         content = NormalizedContent(
