@@ -265,6 +265,11 @@ class ResearchRun(StrictModel):
     started_at: datetime = Field(default_factory=utc_now)
     completed_at: datetime | None = None
     error: str | None = None
+    provider_calls: dict[str, int] = Field(default_factory=dict)
+    cache_hits: int = Field(default=0, ge=0)
+    estimated_cost_units: float = Field(default=0.0, ge=0)
+    videos_transcribed: int = Field(default=0, ge=0)
+    embeddings_created: int = Field(default=0, ge=0)
 
 
 class ResearchPack(StrictModel):

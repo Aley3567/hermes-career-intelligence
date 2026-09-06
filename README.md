@@ -4,7 +4,7 @@
 
 项目保留 upstream 的四平台 TikHub MCP、`social-research` 与 `media-transcriber`，新增平台无关的 Career Intelligence 层：User Profile、Claim/Evidence、Creator 评分、共识/分歧/新兴信号、Skill Gap、ResearchPack 与持久化。
 
-当前状态：已完成 upstream 审计和可离线运行的第一条 Mock 垂直切片；尚未接入真实 TikHub 数据，也不把 Mock 结论当成真实平台结论。
+当前状态：Stage 0–2 已完成，Stage 3 的 Xiaohongshu Provider、归一化、缓存、调用预算与 ResearchRun 记账代码路径已完成并具备离线 fixture 验收；真实 TikHub Key 冒烟测试仍需在凭据可用时执行，Mock/fixture 结果不会被当成真实平台结论。
 
 ## 本地验证
 
@@ -22,6 +22,7 @@ python -m hermes_career_intelligence.demo
 - [架构](docs/ARCHITECTURE.md)
 - [分阶段路线图](docs/ROADMAP.md)
 - [Social Provider Contract](docs/PROVIDERS.md)
+- [缓存与成本纪律](docs/CACHING.md)
 - [待创建的 GitHub Issues](docs/GITHUB_ISSUES.md)
 
 ## Upstream 原始能力

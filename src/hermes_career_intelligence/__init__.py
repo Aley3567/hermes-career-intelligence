@@ -8,15 +8,26 @@ from .models import (
     UserObservation,
     UserProfile,
 )
+from .cache import (
+    ArtifactLedger,
+    BudgetedMCPClient,
+    ResearchBudget,
+    SQLiteResponseCache,
+    build_budgeted_xhs_provider,
+)
 from .repository import SQLiteKnowledgeRepository
 
 __all__ = [
     "Claim",
+    "ArtifactLedger",
+    "BudgetedMCPClient",
     "Creator",
     "Evidence",
     "ResearchPack",
+    "ResearchBudget",
+    "SQLiteResponseCache",
     "SQLiteKnowledgeRepository",
     "UserObservation",
     "UserProfile",
+    "build_budgeted_xhs_provider",
 ]
-
