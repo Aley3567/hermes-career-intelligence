@@ -4,13 +4,15 @@
 
 `BudgetedMCPClient` 包装任意 `MCPToolClient`：
 
-1. 对 `tool_name + canonical arguments` 计算稳定 SHA-256。
+1. 对 `provider + schema_version + operation + canonical arguments` 计算稳定 SHA-256，避免不同 Provider 或响应 schema 共用错误缓存。
 2. 先查询持久化 SQLite cache。
-3. 未命中才消耗 Research Budget 并调用 TikHub。
-4. 只缓存成功且有数据的响应；错误与空数据不缓存。
+3. 未命中才预占 Research Budget 并调用 Provider。
+4. 只缓存成功且包含非空数据的响应；错误、`None`、空列表和空对象不缓存，避免长 TTL 的负缓存。
 5. 保存 TikHub `cache_url` 与过期时间，默认 TTL 24 小时。
 
-参数 JSON 会排序，所以字典键顺序不会制造重复调用。每次真实 Provider 调用、缓存命中和估算 cost unit 都可写回 `ResearchRun`。
+参数 JSON 会排序，所以字典键顺序不会制造重复调用。每次真实 Provider 调用、缓存命中和估算 cost unit 都会实时同步到绑定的 `ResearchRun`。
+
+正式 XHS 调用应通过 `build_budgeted_xhs_provider(...)` 构造：它把 `TikHubXHSProvider`、`BudgetedMCPClient`、`ResearchBudget` 和当前 `ResearchRun` 连接起来，避免生产路径绕过缓存与预算。
 
 ## Content and media fingerprints
 
