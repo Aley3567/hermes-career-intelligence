@@ -14,7 +14,8 @@ class UpstreamMcpTests(unittest.TestCase):
     def _module():
         path = Path(__file__).resolve().parents[1] / "mcp" / "tikhub_xhs_mcp.py"
         spec = importlib.util.spec_from_file_location("tikhub_xhs_mcp_for_test", path)
-        assert spec and spec.loader
+        if spec is None or spec.loader is None:
+            raise RuntimeError(f"could not load upstream MCP module from {path}")
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         return module
