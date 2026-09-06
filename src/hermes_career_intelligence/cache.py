@@ -23,8 +23,19 @@ def _canonical_json(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
 
 
-def request_fingerprint(tool_name: str, arguments: dict[str, Any]) -> str:
-    payload = {"tool": tool_name, "arguments": arguments}
+def request_fingerprint(
+    tool_name: str,
+    arguments: dict[str, Any],
+    *,
+    provider: str = "tikhub_xhs",
+    schema_version: str = "v1",
+) -> str:
+    payload = {
+        "provider": provider,
+        "schema_version": schema_version,
+        "operation": tool_name,
+        "arguments": arguments,
+    }
     return hashlib.sha256(_canonical_json(payload).encode("utf-8")).hexdigest()
 
 
@@ -55,7 +66,13 @@ class BudgetExceeded(RuntimeError):
 
 
 class ResearchBudget:
-    def __init__(self, max_provider_calls: int = 10, unit_costs: dict[str, float] | None = None) -> None:
+    def __init__(
+        self,
+        max_provider_calls: int = 10,
+        unit_costs: dict[str, float] | None = None,
+        *,
+        run: ResearchRun | None = None,
+    ) -> None:
         if max_provider_calls < 1:
             raise ValueError("max_provider_calls must be at least 1")
         self.max_provider_calls = max_provider_calls
@@ -63,19 +80,30 @@ class ResearchBudget:
         self.provider_calls: Counter[str] = Counter()
         self.cache_hits = 0
         self.estimated_cost_units = 0.0
+        self.run = run
+        self._sync_run()
 
     @property
     def total_provider_calls(self) -> int:
         return sum(self.provider_calls.values())
+
+    def _sync_run(self) -> None:
+        if self.run is None:
+            return
+        self.run.provider_calls = dict(self.provider_calls)
+        self.run.cache_hits = self.cache_hits
+        self.run.estimated_cost_units = round(self.estimated_cost_units, 4)
 
     def record_provider_call(self, tool_name: str) -> None:
         if self.total_provider_calls >= self.max_provider_calls:
             raise BudgetExceeded(f"provider call budget exhausted before {tool_name}")
         self.provider_calls[tool_name] += 1
         self.estimated_cost_units += self.unit_costs.get(tool_name, 1.0)
+        self._sync_run()
 
     def record_cache_hit(self) -> None:
         self.cache_hits += 1
+        self._sync_run()
 
     def apply_to(self, run: ResearchRun) -> ResearchRun:
         return run.model_copy(
@@ -170,15 +198,24 @@ class BudgetedMCPClient:
         *,
         ttl: timedelta = timedelta(hours=24),
         clock: Callable[[], datetime] = _utc_now,
+        provider_name: str = "tikhub_xhs",
+        schema_version: str = "v1",
     ) -> None:
         self.client = client
         self.cache = cache
         self.budget = budget
         self.ttl = ttl
         self.clock = clock
+        self.provider_name = provider_name
+        self.schema_version = schema_version
 
     def call(self, tool_name: str, arguments: dict[str, Any]) -> dict[str, Any]:
-        cache_key = request_fingerprint(tool_name, arguments)
+        cache_key = request_fingerprint(
+            tool_name,
+            arguments,
+            provider=self.provider_name,
+            schema_version=self.schema_version,
+        )
         now = self.clock()
         cached = self.cache.get(cache_key, now=now)
         if cached is not None:
@@ -203,7 +240,43 @@ class BudgetedMCPClient:
         if not isinstance(response, dict) or response.get("ok") is False or response.get("error"):
             return False
         code = response.get("code")
-        return code in (None, 200) and response.get("data") is not None
+        if code not in (None, 200):
+            return False
+        data = response.get("data")
+        if data is None:
+            return False
+        if isinstance(data, (dict, list, tuple, set, str, bytes)) and not data:
+            return False
+        return True
+
+
+def build_budgeted_xhs_provider(
+    client: MCPToolClient,
+    run: ResearchRun,
+    cache: SQLiteResponseCache,
+    *,
+    max_provider_calls: int = 10,
+    unit_costs: dict[str, float] | None = None,
+    ttl: timedelta = timedelta(hours=24),
+    schema_version: str = "v1",
+):
+    """Production construction path for an XHS provider with cache/budget accounting.
+
+    The returned budget is bound to ``run`` so provider calls, cache hits, and
+    estimated cost units are reflected on the live ResearchRun automatically.
+    """
+    from .providers.tikhub_xhs import TikHubXHSProvider
+
+    budget = ResearchBudget(max_provider_calls=max_provider_calls, unit_costs=unit_costs, run=run)
+    budgeted_client = BudgetedMCPClient(
+        client,
+        cache,
+        budget,
+        ttl=ttl,
+        provider_name="tikhub_xhs",
+        schema_version=schema_version,
+    )
+    return TikHubXHSProvider(budgeted_client), budget
 
 
 class ArtifactLedger:
