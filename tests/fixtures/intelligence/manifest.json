@@ -1,0 +1,56 @@
+{
+  "schema_version": "stage4-prep-v1",
+  "as_of": "2026-09-06T00:00:00Z",
+  "cases": [
+    {
+      "id": "first_hand_high_signal",
+      "area": "ranking",
+      "expects": ["first_hand_content_outscores_generic_summary", "score_breakdown_present"]
+    },
+    {
+      "id": "marketing_heavy",
+      "area": "ranking",
+      "expects": ["marketing_penalty_positive", "high_engagement_does_not_dominate"]
+    },
+    {
+      "id": "duplicate_repost",
+      "area": "deduplication",
+      "expects": ["duplicate_penalty_positive", "independent_creator_count_not_inflated"]
+    },
+    {
+      "id": "low_quality_popular",
+      "area": "ranking",
+      "expects": ["popular_low_quality_below_credible_specific_content"]
+    },
+    {
+      "id": "supporting_independent",
+      "area": "consensus",
+      "expects": ["claim_has_multiple_independent_creators", "all_supporting_evidence_traceable"]
+    },
+    {
+      "id": "explicit_conflict",
+      "area": "disagreement",
+      "expects": ["supporting_and_counter_evidence_preserved", "disagreement_emitted"]
+    },
+    {
+      "id": "emerging_signal",
+      "area": "signals",
+      "expects": ["recent_frequency_above_baseline", "emerging_signal_emitted"]
+    },
+    {
+      "id": "old_popular_signal",
+      "area": "signals",
+      "expects": ["not_marked_emerging"]
+    },
+    {
+      "id": "timestamped_video",
+      "area": "extraction",
+      "expects": ["claim_evidence_traceable", "transcript_start_end_present"]
+    },
+    {
+      "id": "user_gap",
+      "area": "gap_analysis",
+      "expects": ["gap_generated_from_external_claim", "user_profile_not_overwritten"]
+    }
+  ]
+}

@@ -8,7 +8,7 @@
 | 1. Audit | 明确复用边界 | `AUDIT.md`、架构决策 | REUSE/MODIFY/ADD/REMOVE 完整 | 已完成 |
 | 2. Domain Core | 跑通离线闭环 | Models、SQLite、Mock Engine、Demo | Claim 可追踪 Evidence；核心测试通过 | 已完成首版 |
 | 3. XHS Provider | 接真实小红书 | Adapter、缓存、归一化、预算控制 | 小样本搜索/详情/Creator/评论可重放 | 已完成（离线/fixture 验收；真实 Key 冒烟在部署/Pilot 前执行） |
-| 4. Intelligence Engine | 从内容到可信结论 | Extraction、Ranking、Clustering、Consensus/Conflict/Trend | Mock + 固定真实样本回归通过 | 待开始 |
+| 4. Intelligence Engine | 从内容到可信结论 | Extraction、Ranking、Clustering、Consensus/Conflict/Trend | Mock + 固定真实样本回归通过 | 前期准备完成，待 4A Ranking 实现 |
 | 5. Hermes Integration | 可被 Agent 调用 | Career Profile、Skill、10-tool MCP、Kanban 流程 | Hermes 端到端返回 ResearchPack | 待开始 |
 | 6. Deployment | 长期低成本运行 | Compose/官方部署、健康检查、备份、日志脱敏 | 重启恢复、无 secret 入库/入 git | 待开始 |
 | 7. 真实求职 Pilot | 回答核心问题 | 真实 ResearchPack、30 天行动计划 | 每个重要结论有 Evidence，限制透明 | 待开始 |
@@ -25,6 +25,14 @@ flowchart TD
     F --> G["6 Deployment"]
     G --> H["7 Career Pilot"]
 ```
+
+## Stage 4 实施顺序
+
+- 4A Ranking：#4
+- 4B Extraction + 4C Clustering/Signals：#5
+- 4D Retrieval/Incremental Update：#6
+
+Stage 4 的输入输出契约、证据不变量和 golden fixture 矩阵见 `docs/INTELLIGENCE_ENGINE.md` 与 `tests/fixtures/intelligence/`。
 
 ## 提交策略
 
