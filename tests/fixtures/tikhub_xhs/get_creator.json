@@ -1,0 +1,17 @@
+{
+  "ok": true,
+  "request_id": "req-creator-001",
+  "data": {
+    "data": {
+      "user": {
+        "user_id": "user-001",
+        "nickname": "林舟",
+        "desc": "虚构的职业内容创作者。",
+        "share_url": "https://fictional.invalid/xhs/user-001",
+        "avatar": "https://fictional.invalid/media/avatar-001.jpg",
+        "interactions": {"fans": "1.2万", "follows": 321, "interaction": "2.5万"},
+        "red_id": "red-fictional-001"
+      }
+    }
+  }
+}

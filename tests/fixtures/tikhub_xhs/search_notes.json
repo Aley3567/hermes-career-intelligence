@@ -1,0 +1,32 @@
+{
+  "ok": true,
+  "request_id": "req-search-001",
+  "cache_url": "https://fictional.invalid/cache/search-001",
+  "data": {
+    "items": [
+      {
+        "note_card": {
+          "note_id": "note-video-001",
+          "type": "video",
+          "display_title": "AI 工作流实录",
+          "desc": "一个虚构的自动化实验记录。",
+          "share_url": "https://fictional.invalid/xhs/note-video-001",
+          "time": 1735689600,
+          "user": {"user_id": "user-001", "nickname": "林舟"},
+          "interact_info": {
+            "liked_count": "1.2万",
+            "comment_count": "37",
+            "collected_count": "2,001",
+            "share_count": 88
+          },
+          "video_url": "https://fictional.invalid/media/video-001.mp4",
+          "image_list": [{"url_default": "https://fictional.invalid/media/cover-001.jpg"}]
+        }
+      }
+    ],
+    "cursor": "cursor-search-002",
+    "search_id": "search-001",
+    "search_session_id": "session-001",
+    "has_more": true
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "ok": true,
+  "request_id": "req-posts-001",
+  "data": {"data": {"note_list": [{"id": "note-creator-001", "type": "normal", "title": "创作者笔记", "text": "虚构笔记文本", "user": {"id": "user-001", "nickname": "林舟"}, "timestamp": 1735689600}], "cursor": {"id": "cursor-posts-002"}, "more": false}}
+}

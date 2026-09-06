@@ -1,0 +1,6 @@
+{
+  "ok": true,
+  "request_id": "req-users-001",
+  "cache_url": "https://fictional.invalid/cache/users-001",
+  "data": {"users": [{"user": {"id": "user-002", "name": "周岚", "fans_count": "1.2万"}}], "nextCursor": "cursor-users-002", "hasMore": false}
+}
