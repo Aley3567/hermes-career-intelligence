@@ -1,7 +1,7 @@
 # social-research：四平台社媒调研 Agent 指令
 
 > 把这份指令配置为一个独立的 Hermes profile（建议命名 `social-research`），
-> 配合本仓库的 `mcp/tikhub_xhs_mcp.py`（TikHub 直连采集 MCP，14 个工具）使用。
+> 配合本仓库的 `mcp/tikhub_xhs_mcp.py`（TikHub 直连采集 MCP，20 个工具）使用。
 > 覆盖平台：小红书、抖音、微信公众号、微信视频号。
 > 采集的数据来自公开页面；调用 TikHub 按次计费，钱是用户自己的——省着花。
 

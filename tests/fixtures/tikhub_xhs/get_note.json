@@ -1,0 +1,20 @@
+{
+  "ok": true,
+  "request_id": "req-note-001",
+  "cache_url": "https://fictional.invalid/cache/note-001",
+  "data": {
+    "note": {
+      "note_card": {
+        "note_id": "note-video-001",
+        "note_type": "video",
+        "title": "详情页视频",
+        "content": "详情页的虚构内容。",
+        "note_url": "https://fictional.invalid/xhs/note-video-001",
+        "publish_time": 1735689600123,
+        "user_info": {"id": "user-001", "name": "林舟"},
+        "stats": {"likes": "1.2万", "comments": 12, "collects": "3.4万", "shares": 9},
+        "play_url": "https://fictional.invalid/media/video-001.mp4"
+      }
+    }
+  }
+}

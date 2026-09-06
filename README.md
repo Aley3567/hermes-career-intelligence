@@ -21,6 +21,7 @@ python -m hermes_career_intelligence.demo
 - [Upstream 审计](docs/AUDIT.md)
 - [架构](docs/ARCHITECTURE.md)
 - [分阶段路线图](docs/ROADMAP.md)
+- [Social Provider Contract](docs/PROVIDERS.md)
 - [待创建的 GitHub Issues](docs/GITHUB_ISSUES.md)
 
 ## Upstream 原始能力
